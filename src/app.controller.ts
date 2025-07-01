@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import { Post, Body } from '@nestjs/common';
+import { Controller, Get } from "@nestjs/common"
+import { AppService } from "./app.service"
+import { Post, Body } from "@nestjs/common"
 
 @Controller()
 export class AppController {
@@ -8,18 +8,18 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.appService.getHello()
   }
 
-
-  @Post('searchMessages')
-  postKeyword(@Body() body: {keyword:string}): any {
-    return this.appService.searchMessages(body.keyword);
+  @Post("searchMessages")
+  async postKeyword(@Body() body: { keyword: string; offset: number }): Promise<any[]> {
+    const res = await this.appService.searchMessages(body.keyword)
+    console.log(res.slice(0, 5)) // Log the first 5 results
+    return res
   }
 
   @Post("forwardMessage")
-  forwardMessage(@Body() body: { chatId: string, messageId: number }): any {
-    return this.appService.forwardMessage(body.chatId, body.messageId);
+  forwardMessage(@Body() body: { fromChatId: string; messageId: number }): any {
+    return this.appService.forwardMessage(body.fromChatId, body.messageId)
   }
-
 }

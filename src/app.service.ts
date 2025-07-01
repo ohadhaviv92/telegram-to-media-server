@@ -10,18 +10,18 @@ export class AppService {
   }
 
 
-  async searchMessages(keyword: string): Promise<any> {
+  async searchMessages(keyword: string,offset:number = 0): Promise<any[]> {
     try {
-      return await this.telegramClient.searchMessages(keyword);
+      return await this.telegramClient.searchMessages(keyword,offset);
     } catch (error) {
       console.error(`Error searching messages: ${error.message}`);
       throw error;
     }
   }
 
-  async forwardMessage(chatId: string, messageId: number): Promise<any> {
+  async forwardMessage(fromChatId: string, messageId: number): Promise<any> {
     try {
-      return await this.telegramClient.forwardMessage(messageId,chatId);
+      return await this.telegramClient.forwardMessage(messageId,fromChatId);
     } catch (error) {
       console.error(`Error forwarding message: ${error.message}`);
       throw error;
