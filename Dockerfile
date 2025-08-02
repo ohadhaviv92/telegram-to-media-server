@@ -13,10 +13,11 @@ COPY tsconfig*.json ./
 COPY nest-cli.json ./
 
 # Install all dependencies (including devDependencies for building)
-RUN npm ci
+RUN npm i
 
 # Copy source code
 COPY src ./src
+COPY package-lock.json ./
 
 # Build the application
 RUN npm run build
@@ -45,10 +46,6 @@ RUN npm ci --omit=dev || npm ci --omit=dev --legacy-peer-deps
 
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
-
-# Create downloads and media directories for video processing
-RUN mkdir -p /app/media/General /app/media/Movies /app/media/Shows && \
-    chown -R nestjs:nodejs /app
 
 # Switch to non-root user
 USER nestjs
