@@ -4,6 +4,7 @@ import { VideoQueueService } from "./video-queue.service"
 import { VideoProcessor } from "./video.processor"
 import { VideoService } from "./video.service"
 import { VideoClassifierService } from "./video-classifier.service"
+import { VideoPathConfirmationService } from "./video-path-confirmation.service"
 import { TelegramModule } from "src/telegram/telegram.module"
 
 @Module({
@@ -14,7 +15,7 @@ import { TelegramModule } from "src/telegram/telegram.module"
     TelegramModule,
   ],
   controllers: [],
-  providers: [VideoQueueService, VideoProcessor, VideoService, VideoClassifierService],
-  exports: [VideoQueueService, VideoService, VideoClassifierService],
+  providers: [VideoQueueService, VideoProcessor, VideoService, VideoClassifierService, VideoPathConfirmationService],
+  exports: [VideoQueueService, VideoService, VideoClassifierService, VideoPathConfirmationService],
 })
 export class VideoModule {}

@@ -1,0 +1,48 @@
+services:
+  # Redis service for Bull queue
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  # NestJS application
+  telegram-server:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "4545:4545"
+    env_file:
+      - .env
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      NODE_ENV: production
+    depends_on:
+      - redis
+      - telegram-bot-api
+    volumes:
+      - ./app/media:/app/media
+      # Add shared volume with telegram-bot-api
+      - telegram-shared-files:/app/telegram-server/shared
+      - ${MEDIA_SERVER_FOLDER_PATH}:/media-server # Mount media path for media server
+    user: "0:0" # Run as root to access files
+
+  telegram-bot-api:
+    image: aiogram/telegram-bot-api:latest
+    environment:
+      TELEGRAM_API_ID: ${TELEGRAM_APP_ID}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH}
+      TELEGRAM_LOCAL: True
+    volumes:
+      - telegram-bot-api-data:/var/lib/telegram-bot-api
+      - telegram-shared-files:/var/lib/telegram-bot-api/
+    ports:
+      - "8081:8081"
+
+volumes:
+  telegram-bot-api-data:
+  redis-data:
+  telegram-shared-files: # New shared volume

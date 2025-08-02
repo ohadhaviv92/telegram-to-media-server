@@ -1,20 +1,19 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ConfigModule } from './config/config.module';
-import { BullModule } from '@nestjs/bull';
-import { VideoModule } from './video/video.module';
-import { TelegramModule } from './telegram/telegram.module';
-import { NotificationModule } from './notification/notification.module';
-import { WebhookModule } from './webhook/webhook.module';
+import { Module } from "@nestjs/common"
+import { ConfigModule } from "./config/config.module"
+import { BullModule } from "@nestjs/bull"
+import { VideoModule } from "./video/video.module"
+import { TelegramModule } from "./telegram/telegram.module"
+import { NotificationModule } from "./notification/notification.module"
+import { WebhookModule } from "./webhook/webhook.module"
+import { HealthController } from "./health.controller"
 
 @Module({
   imports: [
     ConfigModule,
     BullModule.forRoot({
       redis: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: parseInt(process.env.REDIS_PORT || '6379'),
+        host: process.env.REDIS_HOST || "localhost",
+        port: parseInt(process.env.REDIS_PORT || "6379"),
       },
     }),
     TelegramModule,
@@ -22,7 +21,7 @@ import { WebhookModule } from './webhook/webhook.module';
     NotificationModule,
     WebhookModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [HealthController],
+  providers: [],
 })
 export class AppModule {}
