@@ -11,7 +11,6 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig*.json ./
 COPY nest-cli.json ./
-COPY .npmrc ./
 
 # Install all dependencies (including devDependencies for building)
 RUN npm ci
@@ -40,7 +39,6 @@ WORKDIR /app
 
 # Copy package files and npm config
 COPY package*.json ./
-COPY .npmrc ./
 
 # Install only production dependencies
 RUN npm ci --omit=dev || npm ci --omit=dev --legacy-peer-deps

@@ -1,10 +1,7 @@
 import { Injectable } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
 import * as path from "path"
-import * as fs from "fs-extra"
 // Using dynamic imports to avoid TypeScript issues
-import type { Ollama } from "@langchain/ollama"
-import type { ChatPromptTemplate } from "@langchain/core/prompts"
 import * as guessit from "guessit-exec"
 
 @Injectable()
