@@ -229,25 +229,6 @@ The application uses multiple Docker services:
    - Check if GuessIt is properly installed in container
    - Verify TMDB API token if using enhanced classification
 
-### Logs
-
-View application logs:
-```bash
-docker-compose logs -f telegram-server
-```
-
-View all services logs:
-```bash
-docker-compose logs -f
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
 
 ## License
 
